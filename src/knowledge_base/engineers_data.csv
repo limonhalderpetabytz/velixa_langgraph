@@ -1,0 +1,21 @@
+Name,Email,Engineer Type,Availability,Workload
+Engineer_1,engineer_1@example.com,network,no,5
+Engineer_2,engineer_2@example.com,data science,no,4
+Engineer_3,engineer_3@example.com,ml,yes,7
+Engineer_4,engineer_4@example.com,hardware,no,22
+Engineer_5,engineer_5@example.com,ml,no,2
+Engineer_6,engineer_6@example.com,server,yes,7
+Engineer_7,engineer_7@example.com,server,no,2
+Engineer_8,engineer_8@example.com,hardware,yes,21
+Engineer_9,engineer_9@example.com,data science,no,5
+Engineer_10,engineer_10@example.com,data science,no,7
+Engineer_11,engineer_11@example.com,server,yes,4
+Engineer_12,engineer_12@example.com,software,yes,13
+Engineer_13,engineer_13@example.com,ml,no,4
+Engineer_14,engineer_14@example.com,hardware,yes,21
+Engineer_15,engineer_15@example.com,software,no,12
+Engineer_16,engineer_16@example.com,hardware,no,21
+Engineer_17,engineer_17@example.com,software,no,12
+Engineer_18,engineer_18@example.com,data science,yes,2
+Engineer_19,engineer_19@example.com,data science,yes,4
+Engineer_20,engineer_20@example.com,network,yes,5

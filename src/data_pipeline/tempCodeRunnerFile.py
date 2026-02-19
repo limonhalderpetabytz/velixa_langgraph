@@ -1,0 +1,1 @@
+User cannot send emails in Outlook

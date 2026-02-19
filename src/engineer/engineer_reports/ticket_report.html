@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Engineer Ticket Analytics Report</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .header {
+            background-color: #333;
+            color: #fff;
+            padding: 10px 0;
+            text-align: center;
+        }
+        .summary {
+            display: flex;
+            justify-content: space-around;
+            margin: 20px 0;
+        }
+        .summary-card {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            width: 18%;
+            text-align: center;
+        }
+        table {
+            width: 90%;
+            margin: 0 auto;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+        .chart-container {
+            display: flex;
+            justify-content: space-around;
+            margin: 20px 0;
+        }
+        .chart {
+            width: 45%;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Engineer Ticket Analytics Report</h1>
+        <p>Engineer: Mh Hasin</p>
+        <p>Report Date/Time: <span id="reportDateTime"></span></p>
+    </div>
+    <div class="summary">
+        <div class="summary-card">
+            <h3>Total Tickets</h3>
+            <p id="totalTickets"></p>
+        </div>
+        <div class="summary-card">
+            <h3>Pending Tickets</h3>
+            <p id="pendingTickets"></p>
+        </div>
+        <div class="summary-card">
+            <h3>Solved Tickets</h3>
+            <p id="solvedTickets"></p>
+        </div>
+        <div class="summary-card">
+            <h3>Average Priority</h3>
+            <p id="avgPriority"></p>
+        </div>
+        <div class="summary-card">
+            <h3>Average Response Time</h3>
+            <p id="avgResponseTime"></p>
+        </div>
+    </div>
+    <table>
+        <tr>
+            <th>Ticket Number</th>
+            <th>Short Description</th>
+            <th>Caller</th>
+            <th>Created On</th>
+            <th>State</th>
+            <th>Priority</th>
+        </tr>
+        <tbody id="ticketTable"></tbody>
+    </table>
+    <div class="chart-container">
+        <div class="chart" id="stateChart"></div>
+        <div class="chart" id="priorityChart"></div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Your JavaScript code here
+    </script>
+</body>
+</html>

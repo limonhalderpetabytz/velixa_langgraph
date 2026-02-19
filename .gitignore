@@ -1,0 +1,55 @@
+# TeamsFx files
+env/.env.*.user
+env/.env.local
+env/.env.playground
+.env
+appPackage/build
+
+# python virtual environment
+.venv/
+__pycache__/
+
+# others
+.deployment/
+node_modules/
+devTools/*.log
+/src/.env
+# Dev tool directories
+/devTools/
+
+
+# TeamsFx files
+env/.env.*.user
+env/.env.local
+env/.env.playground
+.env
+appPackage/build
+
+# python virtual environment
+.venv/
+__pycache__/
+
+# others
+.deployment/
+node_modules/
+devTools/*.log
+
+# Dev tool directories
+/devTools/
+
+# Bytecode files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual environment
+venv/
+
+# Environment variables
+.env
+
+# VS Code settings
+.vscode/
+
+
