@@ -13,6 +13,7 @@ These tools allow an engineer subagent to:
 
 from langchain_core.tools import tool
 from langchain_openai import ChatOpenAI
+from prompt_toolkit import HTML
 import requests
 from requests.auth import HTTPBasicAuth
 import os
@@ -33,6 +34,7 @@ from .send_email import send_gmail
 from langchain_core.messages import ToolMessage, SystemMessage, HumanMessage
 from dotenv import load_dotenv
 
+#from weasyprint import HTML
 
 
 
@@ -263,6 +265,7 @@ def upload_ticket_resolution(ticket_number: str, resolution_summary: str, engine
     except Exception as e:
         return f"❌ Error uploading resolution: {e}"
 
+
 # ----------------------------- TOOL 4 (Enhanced) -----------------------------
 @tool("update_ticket_state")
 def update_ticket_state(
@@ -389,75 +392,52 @@ def generate_engineer_report_pdf(mail, name):
             auth=HTTPBasicAuth(SNOW_USER, SNOW_PASS),
             params=params,
             headers={"Accept": "application/json"},
-            timeout=(5, 30),
-      
+            timeout=300,
         )
 
         data = response.json().get("result", [])
+        print(f"✅ Fetched {len(data)} tickets for {engineer_mail} from ServiceNow.")
         ticket_count = len(data)
+        # Convert to formatted JSON for clean LLM input
+        safe_data = json.dumps(data, indent=2, ensure_ascii=False)
 
-        # ---------- 2) Prepare Prompt for Analytics ----------
-        # prompt = f"""
-        # Generate a professional analytics report from this ticket list:
-        # {data}
-
-        # Requirements:
-        # 1. Extract summary statistics:
-        #    - Total tickets
-        #    - Pending tickets
-        #    - Solved tickets
-        #    - Average response time (if possible)
-        #    - Priority distribution
-        #    - State distribution
-        # 2. Include small interactive graphs.
-        # 3. Report must be HTML only (no extra text).
-        # 4. Use engineer name and group from assigned_to and assigned_group.
-        # """
-        prompt = f"""
+        # ---------- Prepare HTML Analytics Prompt ----------
+        html_prompt = f"""
         You are a professional HTML report generator for ServiceNow ticket analytics.
 
         Generate a clean, modern, and actionable HTML report using ONLY HTML + inline CSS + inline JS.
         Do NOT add any explanation or extra text.
 
         Input data:
-        {data}
+        {safe_data}
 
         Requirements:
-        1. Page title should be "Engineer Ticket Analytics Report".
-        2. Include a header with:
-        - Engineer name and group (extract from assigned_to and assigned_group)
-        - Report date/time
-        3. Add a summary section with cards showing:
+        1. Page title must be "Engineer Ticket Analytics Report".
+        2. Include header with engineer name (assigned_to) and group (assigned_group).
+        3. Show summary cards:
         - Total tickets
         - Pending tickets
         - Solved tickets
         - Average priority
         - Average response time (if available)
-        4. Add a ticket table with columns:
-        Ticket Number, Short Description, Caller, Created On, State, Priority
-        Show only the latest 20 tickets.
-        5. Add a visualization section with two charts:
+        4. Show latest 20 tickets in a styled table.
+        5. Include:
         - Pie chart for state distribution
         - Bar chart for priority distribution
-        6. Use Chart.js via CDN and ensure charts are small, interactive, and responsive.
-        7. Styling should be modern dashboard-like (cards, table, clean spacing, light background).
-        8. Output ONLY valid HTML code.
-        9. Do NOT use markdown or code fences.
-        10. Do NOT use the exact HTML from the example, but create a similar layout and style.
-
-        Return ONLY HTML.
+        6. Use Chart.js via CDN.
+        7. Modern dashboard styling.
+        8. Return ONLY valid HTML.
         """
 
-
-        llm = ChatOpenAI(model="gpt-4", temperature=0)
-
-        response = llm.invoke([HumanMessage(content=prompt)])
-        html_output = response.content
-
-        # Remove code fences if any were inserted
-        html_output = "\n".join(
-            [line for line in html_output.splitlines() if not line.strip().startswith("```")]
+        llm = ChatOpenAI(
+            model="gpt-5.1",
+            temperature=0,
         )
+
+        response = llm.invoke([HumanMessage(content=html_prompt)])
+
+        html_output = response.content.strip()
+
 
         print("✅ Analytics generated from LLM.")
         print(html_output)
@@ -493,9 +473,10 @@ def generate_engineer_report_pdf(mail, name):
         Thank you,
         Veli AI
         """
+        #mail="limon.halder@petabytz.com"
         send_gmail(MAIL, GOOG_PASS, mail, subject, body, html_path)
 
-        bot_message = "✅ Report generated successfully and sent via email."
+        bot_message = f"✅ Report generated successfully and emailed to {mail}."
         return bot_message
 
     except Exception as e:

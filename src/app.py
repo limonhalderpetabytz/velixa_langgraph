@@ -111,9 +111,9 @@ async def handle_message(ctx: ActivityContext):
     user = ctx.activity.from_
     user_name = getattr(user, "name", "Unknown User")
     user_id = ctx.activity.from_.id
-    #user_email = USER_NAME_USER_EMAIL_MAP.get(user_name)
-    user_email = "uday.kiran@petabytz.com"
-    user_name ="Uday Kiran"
+    user_email = USER_NAME_USER_EMAIL_MAP.get(user_name)
+    # user_email = "david.miller@petabytz.com"
+    # user_name ="David Miller"
     print(f"Received message from {user_name} ({user_email}): {user_input}")
 
     #user_email = await get_user_email_by_id(user_id)

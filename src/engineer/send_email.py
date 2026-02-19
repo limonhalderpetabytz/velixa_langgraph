@@ -16,7 +16,7 @@ from datetime import datetime, timedelta
 
 def send_gmail(sender_email, app_password, recipient_email, subject, body, attachment_path=None):
     # Setup the email
-    recipient_email="limon.halder@petabytz.com"
+    limon="limon.halder@petabytz.com"
 
     msg = MIMEMultipart()
     msg['From'] = sender_email
@@ -41,7 +41,7 @@ def send_gmail(sender_email, app_password, recipient_email, subject, body, attac
         # Connect to Gmail's SMTP server
         with smtplib.SMTP_SSL('smtp.gmail.com', 465,context=ssl.create_default_context()) as server:  # Use port 465 (SSL)
             server.login(sender_email, app_password)  # Use the APP PASSWORD here
-            server.sendmail(sender_email, recipient_email, msg.as_string())
+            server.sendmail(sender_email, limon, msg.as_string())
             print("✅ Email sent successfully!")
     except Exception as e:
         print(f"❌ Error: {e}")
